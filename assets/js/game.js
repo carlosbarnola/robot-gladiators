@@ -22,6 +22,7 @@ console.log(enemyNames.length);
 console.log(enemyNames[0]);
 console.log(enemyNames[3]);
 
+
 var fight = function(enemyNames) {
 
   while(playerHealth > 0 && enemyHealth > 0) {
@@ -38,7 +39,7 @@ var fight = function(enemyNames) {
         if (confirmSkip) {
           window.alert(playerName + " has decided to skip this fight. Goodbye!");
           // subtract money from playerMoney for skipping
-          playerMoney = playerMoney - 10;
+          playerMoney = Math.max(0, playerMoney - 10);
           console.log("playerMoney", playerMoney)
           break;
         }
@@ -46,8 +47,10 @@ var fight = function(enemyNames) {
      
     //if player pick "fight"
     if (promptFight === 'fight' || promptFight === 'FIGHT') {
+    //generate random damage value based on player's attack power
+    var damage = randonNumber(playerAttack - 3, playerAttack);
     //remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
+    enemyHealth = Math.max(0, enemyHealth - damage);
     // Log a resulting message to the console so we know that it worked.
     console.log(
         playerName + " attacked " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining."
@@ -65,7 +68,8 @@ var fight = function(enemyNames) {
     }
     
     // remove players's health bu subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    var damage = randonNumber(enemyAttack - 3, enemyAttack);
+    playerHealth = Math.max(0, playerHealth - damage);
     // Log a resulting message to the console so we know that it worked.
     console.log(
         enemyNames + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
@@ -100,7 +104,7 @@ var startGame = function() {
         if (playerHealth > 0){
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1 ) );
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            enemyHealth = randonNumber(40, 60);
             fight(pickedEnemyName);
             //if player is still alive and we're not at the last enemy in the array
             if (playerHealth > 0 && i < enemyNames.length - 1) {
@@ -189,6 +193,13 @@ var shop = function() {
         shop();
         break;
     }
+};
+
+//function to generate a random numeric value
+var randonNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+    
+    return value;
 };
 
 //start game when the page loads
