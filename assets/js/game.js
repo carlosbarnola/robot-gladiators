@@ -6,15 +6,15 @@
 //"LOSE" - Player robot's health is zero or less
 
 
-//console.log(enemy.name);
-//console.log(enemy.name.length);
-//console.log(enemy.name[0]);
-//console.log(enemy.name[3]);
+//function to generate a random numeric value
+var randonNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+    
+    return value;
+};
 
 
 var fight = function(enemy) {
-
-
   while(playerInfo.health > 0 && enemy.health > 0) {
 
     //ask player if they'd like to fight or run
@@ -36,7 +36,7 @@ var fight = function(enemy) {
      }
      
     //if player pick "fight"
-    if (promptFight === 'fight' || promptFight === 'FIGHT') {
+    // if (promptFight === 'fight' || promptFight === 'FIGHT') {
     //generate random damage value based on player's attack power
     var damage = randonNumber(playerInfo.attack - 3, playerInfo.attack);
     //remove enemy's health by subtracting the amount set in the playerInfo.attack variable
@@ -76,11 +76,11 @@ var fight = function(enemy) {
    }
 
    //invalid input
-   else {
+//    else {
        
-       window.alert("Please enter a valid command.");
-   }
-  }   
+//        window.alert("Please enter a valid command.");
+//    }
+//  }   
 };
 
 //function to start a new game
@@ -169,16 +169,21 @@ var shop = function() {
     }
 };
 
-//function to generate a random numeric value
-var randonNumber = function(min, max) {
-    var value = Math.floor(Math.random() * (max - min + 1) + min);
+//get player name
+var getPlayerName = function() {
+    var name = "";
     
-    return value;
+    while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+    }
+    console.log("Your robot's name is " + name);
+    return name;
+    
 };
 
 //player info
 var playerInfo = { 
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -222,6 +227,11 @@ var enemyInfo = [
     }
   ];
 
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]['attack']);
+  
 
 //start game when the page loads
 startGame();
